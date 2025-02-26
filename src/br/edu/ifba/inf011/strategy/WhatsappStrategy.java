@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import br.edu.ifba.inf011.model.evento.Evento;
 
-public class EmailStrategy implements FormatoStrategy{
+public class WhatsappStrategy implements FormatoStrategy{
 
 	@Override
 	public String formatar(Evento evento) throws FormatoException {
@@ -12,7 +12,6 @@ public class EmailStrategy implements FormatoStrategy{
 		if(this.verifica(evento)) {
 			
 			String mensagem =  "Descricao: " + evento.getDescricao()+ " Localizacao: " + evento.getLocalizacao() + " Inicio: " + evento.getInicio() + " Termino: " + evento.getTermino();
-			this.adicionarAoGoogleCalendar(mensagem);
 			return mensagem;
 			
 		}
@@ -21,15 +20,11 @@ public class EmailStrategy implements FormatoStrategy{
 	}
 
 	private boolean verifica(Evento evento) {
-		if((evento.getPrioridade() >= 1 && evento.getPrioridade() <= 5) && evento.iniciaEm(LocalDate.now())) {
+		if((evento.getPrioridade() >= 6 && evento.getPrioridade() <= 10) && evento.iniciaEm(LocalDate.now())) {
 			return true;
 		}
 		return false;
 		
 	}
 	
-	private void adicionarAoGoogleCalendar(String mensagem) {
-		System.out.println("Adicionando mensagem ao Google Calendar" + "\n" + mensagem);
-	}
-
 }

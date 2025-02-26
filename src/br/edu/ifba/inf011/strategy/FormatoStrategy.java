@@ -4,6 +4,6 @@ import br.edu.ifba.inf011.model.evento.Evento;
 
 public interface FormatoStrategy {
 	
-	public String formatar(Evento evento);
+	public String formatar(Evento evento) throws FormatoException;
 
 }
