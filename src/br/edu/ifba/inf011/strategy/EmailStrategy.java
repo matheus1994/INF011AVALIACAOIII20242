@@ -12,7 +12,6 @@ public class EmailStrategy implements FormatoStrategy{
 		if(this.verifica(evento)) {
 			
 			String mensagem =  "Descricao: " + evento.getDescricao()+ " Localizacao: " + evento.getLocalizacao() + " Inicio: " + evento.getInicio() + " Termino: " + evento.getTermino();
-			this.adicionarAoGoogleCalendar(mensagem);
 			return mensagem;
 			
 		}
@@ -28,8 +27,4 @@ public class EmailStrategy implements FormatoStrategy{
 		
 	}
 	
-	private void adicionarAoGoogleCalendar(String mensagem) {
-		System.out.println("Adicionando mensagem ao Google Calendar" + "\n" + mensagem);
-	}
-
 }
