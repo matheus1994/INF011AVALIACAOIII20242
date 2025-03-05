@@ -6,4 +6,6 @@ public class NenhumHandlerException extends Exception {
 	public NenhumHandlerException(String mensagem) {
         super(mensagem);
     }
+	
+	
 }

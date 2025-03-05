@@ -1,46 +1,59 @@
-# INF011AVALIACAOIII20242
+# AVALIAÇÃO FINAL DA DISCIPLINA DE PADRÕES DE PROJETO
 
-Identifique e escreva os padrões adequados para resolver os problemas apresentados.
-Você deve escrever um notificador, capaz de formatar e enviar mensagens notificando a ocorrência de eventos. Uma
-primeira versão desta classe foi escrita com o código apresentado a seguir.
+Equipe:  Matheus Conceição Bonfin, Rafael Mota Correia e Uriel Lincoln Santana Reis.
 
-public class Notificador {
-public void notificar(Evento e) {
-if(e.getPrioridade() == 10 && e.iniciaEm(LocalDate.now())) {
-String formatada = this.formatarMensagemParaWhatsApp(e);
-this.adicionandoEventoAoGoogleCalendar(formatada);
-this.enviandoMensagemEmail(formatada);
-this.enviandoMensagemWhatsApp(formatada);
-}else if(e.getPrioridade() >= 5 && e.iniciaEm(LocalDate.now())){
-String formatada = this.formatarMensagemParaEmail(e);
-this.adicionandoEventoAoGoogleCalendar(formatada);
-this.enviandoMensagemEmail(formatada);
-}else if(e.getPrioridade() >= 1 && e.getPrioridade() < 5 &&
-e.iniciaEntre(LocalDateTime.now().minus(2, ChronoUnit.DAYS),
- LocalDateTime.now())){
-String formatada = this.formatarMensagemParaEmail(e);
-this.adicionandoEventoAoGoogleCalendar(formatada);
+## **Padrões de Projeto Utilizados:**
+### **1. Chain of Responsibility (CoR)**
+#### **Participantes do Padrão:**
+| Papel no CoR          | Classe/Componente                                                                       | Descrição                                                                           |
+| --------------------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| **Abstract Handler**  | `AbstractNotificadorHandler`                                                            | Define a interface comum para todos os handlers e gerencia a cadeia (`setProximo`). |
+| **Concrete Handlers** | `NotificadorAltaPrioridade`, `NotificadorMediaPrioridade`, `NotificadorBaixaPrioridade` | Implementam a lógica específica para tratar eventos de certas prioridades.          |
+| **Client**            | Classe que configura a cadeia (ex: `Notificador`)                                       | Monta a cadeia de handlers e inicia o processamento do evento.                      |
+
+#### **Por Que Usamos o CoR?**
+- **Cumulatividade Controlada:** Permite que múltiplos handlers processem o mesmo evento sequencialmente (ex: prioridade 10 aciona WhatsApp, e-mail *e* Google Calendar).  
+- **Desacoplamento:** O cliente não precisa saber qual handler processará o evento.  
+- **Extensibilidade:** Novos handlers (ex: para SMS) podem ser adicionados sem modificar código existente e para o mesmo nível de prioridade. Podem existir dois ou mais handlers para um evento com mesma prioridade.
+
+---
+
+### **2. Strategy**
+#### **Participantes do Padrão:**
+| Papel no Strategy       | Classe/Componente                                                             | Descrição                                                                                    |
+| ----------------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| **Strategy Interface**  | `FormatoStrategy`, `EnvioStrategy`                                            | Define a interface comum para algoritmos de formatação e envio.                              |
+| **Concrete Strategies** | `WhatsAppFormatoStrategy`, `EmailFormatoStrategy`, `EmailEnvioStrategy`, etc. | Implementam algoritmos específicos (ex: formatação para WhatsApp).                           |
+| **Context**             | Handlers (`NotificadorAltaPrioridade`, etc.)                                  | Usa a estratégia para executar um comportamento variável (ex: `formatoStrategy.formatar()`). |
+
+#### **Por Que Usamos o Strategy?**
+- **Variação Dinâmica:** Permite trocar formatos/canais de envio em tempo de execução (ex: prioridade alta usa WhatsApp, média usa e-mail).  
+- **Separação de Lógica:** Isola regras complexas de formatação/envio em classes dedicadas.  
+- **Reúso:** Estratégias como `EnvioEmailStrategy` podem ser compartilhadas entre handlers.
+
+---
+## **Exceção "Nenhum Handler Disponível"**
+### **Contexto:**
+Na versão original, o handler de baixa prioridade (`NotificadorBaixaPrioridade`) processava **todos os eventos** (condição `return true`). Na nova versão, ele só processa eventos de prioridade 1-4 que iniciem em até 2 dias. Assim, eventos fora dessas condições podem não ter handlers.
+
+### **Implementação:**
+
+1. **Retorno Booleano no `notificar`:**  
+   Cada handler retorna `true` se processou o evento.  
+2. **Verificação no Client:**  
+   Após a cadeia processar, o cliente verifica se algum handler executou a ação. Se não, lança `NenhumHandlerException`.
+
+#### **Exemplo:**
+```java
+public void notificar(Evento evento) throws GoogleCalendarException, NenhumHandlerException {
+
+boolean processado = cadeia.notificar(evento);
+
+if (!processado) {
+
+	throw new NenhumHandlerException("Nenhum handler disponível para processar o evento: " + evento.getDescricao());
+
+	}
+
 }
-}
- …
-}
 
-
-A questão é que este código se mostra excessivamente inflexível, não permitindo a alteração dinâmica das regras de
-envio, nem a configuração de diferentes regras de envio, a depender do tipo de evento.
-Além disso, esse código tende a crescer com o tempo, dificultando a manutenção da classe Notificador.
-Ainda assim se deseja que seja mantida a estrutura básica do algoritmo:
-1. considera-se a data do evento e sua prioridade para então:
-(a) se for o caso, adicionar o evento ao Google Calendar
-(b) formatar para um determinado tipo de forma de envio (e-mail, whatsapp, sms, mensagem de rede social)
-(c) notificar a ocorrência do evento para a forma de envio considerada (e-mail, whatsapp, sms, mensagem de
-rede social).
-Sua tarefa é refatorar o notificador existente, utilizando os princípios de design orientados a objetos e em particular,
-adotando padrões de projeto, que permitam, que os requisitos funcionais e não funcionais apresentados sejam
-contemplados.
-Adicionalmente forneça uma documentação simples:
-1. Indicando o/os padrões de projeto escolhidos e justificando suas escolhas;
-2. Detalhando as classes participantes do projeto e seus papéis nos padrões de projeto escolhido;
-3. Sem essa documentação, o código não será analisado.
-ATENÇÃO
- As soluções devem ser escritas em código JAVA

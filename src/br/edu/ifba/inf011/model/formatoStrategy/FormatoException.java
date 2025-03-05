@@ -23,18 +23,6 @@ public class FormatoException extends Exception {
         super("Formato inválido para o evento."); 
         this.evento = evento;
     }
-
-  
-    public Evento getEvento() {
-        return evento;
-    }
-
-  
-    @Override
-    public String toString() {
-        return super.toString() + " Evento: " + evento.toString();
-    }
-
    
     @Override
     public void printStackTrace() {
