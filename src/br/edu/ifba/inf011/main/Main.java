@@ -3,13 +3,14 @@ package br.edu.ifba.inf011.main;
 import java.time.LocalDateTime;
 
 import br.edu.ifba.inf011.model.Geolocalizacao;
+import br.edu.ifba.inf011.model.CoR.NenhumHandlerException;
 import br.edu.ifba.inf011.model.evento.Lembrete;
 import br.edu.ifba.inf011.model.googlecalendarservice.GoogleCalendarException;
 import br.edu.ifba.inf011.model.googlecalendarservice.GoogleCalendarService;
 import br.edu.ifba.inf011.notificador.Notificador;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NenhumHandlerException {
         try {
             
             GoogleCalendarService googleCalendar = new GoogleCalendarService();

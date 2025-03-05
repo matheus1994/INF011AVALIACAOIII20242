@@ -1,6 +1,7 @@
 package br.edu.ifba.inf011.notificador;
 
 import br.edu.ifba.inf011.model.CoR.AbstractNotificadorHandler;
+import br.edu.ifba.inf011.model.CoR.NenhumHandlerException;
 import br.edu.ifba.inf011.model.CoR.NotificadorAltaPrioridade;
 import br.edu.ifba.inf011.model.CoR.NotificadorBaixaPrioridade;
 import br.edu.ifba.inf011.model.CoR.NotificadorMediaPrioridade;
@@ -47,8 +48,11 @@ public class Notificador {
     }
     
 
-    public void notificar(Evento evento) throws GoogleCalendarException {
-        cadeia.notificar(evento);
+    public void notificar(Evento evento) throws GoogleCalendarException, NenhumHandlerException {
+        boolean processado = cadeia.notificar(evento);
+        if (!processado) {
+            throw new NenhumHandlerException("Nenhum handler disponível para processar o evento: " + evento.getDescricao());
+        }
     }
 
 	

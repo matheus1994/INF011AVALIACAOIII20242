@@ -27,13 +27,16 @@ public abstract class AbstractNotificadorHandler {
     }
 
     
-    public void notificar(Evento evento) throws GoogleCalendarException {
+    public boolean notificar(Evento evento) throws GoogleCalendarException {
+        boolean processado = false;
         if (podeProcessar(evento)) {
             processarNotificacao(evento);
+            processado = true;
         }
         if (proximo != null) {
-            proximo.notificar(evento);
+            processado = proximo.notificar(evento) || processado; // Processa o próximo e acumula o resultado
         }
+        return processado;
     }
 
     
