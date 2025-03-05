@@ -1,5 +1,8 @@
 package br.edu.ifba.inf011.model.CoR;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 import br.edu.ifba.inf011.model.envioStrategy.EnvioStrategy;
 import br.edu.ifba.inf011.model.evento.Evento;
 import br.edu.ifba.inf011.model.formatoStrategy.FormatoStrategy;
@@ -17,7 +20,9 @@ public class NotificadorBaixaPrioridade extends AbstractNotificadorHandler {
     
     @Override
     protected boolean podeProcessar(Evento evento) {
-        return true;
+        return evento.getPrioridade() >= 1 &&
+        		evento.iniciaEntre(LocalDateTime.now().minus(2, ChronoUnit.DAYS),
+        				LocalDateTime.now());
     }
 
     
