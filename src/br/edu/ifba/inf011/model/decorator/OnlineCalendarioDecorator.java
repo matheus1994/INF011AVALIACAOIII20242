@@ -1,6 +1,5 @@
 package br.edu.ifba.inf011.model.decorator;
 
-import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

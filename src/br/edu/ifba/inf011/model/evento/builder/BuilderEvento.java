@@ -17,6 +17,7 @@ public class BuilderEvento {
 	protected Geolocalizacao localizacao;
 	protected String profissionalMedico;
 	
+	@SuppressWarnings("unused")
 	private TipoEvento tipoEvento;
 	
 	public BuilderEvento  init() {

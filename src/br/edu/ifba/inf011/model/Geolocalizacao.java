@@ -8,7 +8,9 @@ public class Geolocalizacao {
 	}
 	
 	private String local;
+	@SuppressWarnings("unused")
 	private Double latitude;
+	@SuppressWarnings("unused")
 	private Double longitude;
 	
 	public Geolocalizacao(String local, Double latitude, Double longitude) {
