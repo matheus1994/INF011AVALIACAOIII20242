@@ -1,6 +1,6 @@
 # AVALIAÇÃO FINAL DA DISCIPLINA DE PADRÕES DE PROJETO
 
-Equipe:  Matheus Conceição Bonfin, Rafael Mota Correia e Uriel Lincoln Santana Reis.
+Equipe:  Matheus Conceição Bonfim, Rafael Mota Correia e Uriel Lincoln Santana Reis.
 
 ## **Padrões de Projeto Utilizados:**
 ### **1. Chain of Responsibility (CoR)**
