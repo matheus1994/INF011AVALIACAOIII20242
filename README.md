@@ -10,6 +10,7 @@ Equipe:  Matheus Conceição Bonfin, Rafael Mota Correia e Uriel Lincoln Santana
 | **Abstract Handler**  | `AbstractNotificadorHandler`                                                            | Define a interface comum para todos os handlers e gerencia a cadeia (`setProximo`). |
 | **Concrete Handlers** | `NotificadorAltaPrioridade`, `NotificadorMediaPrioridade`, `NotificadorBaixaPrioridade` | Implementam a lógica específica para tratar eventos de certas prioridades.          |
 | **Client**            | Classe que configura a cadeia (ex: `Notificador`)                                       | Monta a cadeia de handlers e inicia o processamento do evento.                      |
+
 Pasta do CoR: [Acessar Pasta](src/br/edu/ifba/inf011/model/CoR/).
 #### **Por que usamos o CoR?**
 
@@ -31,7 +32,8 @@ Pasta do CoR: [Acessar Pasta](src/br/edu/ifba/inf011/model/CoR/).
 | **Strategy Interface**  | `FormatoStrategy`, `EnvioStrategy`                                            | Define a interface comum para algoritmos de formatação e envio.                              |
 | **Concrete Strategies** | `WhatsAppFormatoStrategy`, `EmailFormatoStrategy`, `EmailEnvioStrategy`, etc. | Implementam algoritmos específicos (ex: formatação para WhatsApp).                           |
 | **Context**             | Handlers (`NotificadorAltaPrioridade`, etc.)                                  | Usa a estratégia para executar um comportamento variável (ex: `formatoStrategy.formatar()`). |
-Pasta do Strategy de Formatação: [Acessar Pasta](src/br/edu/ifba/inf011/model/formatoStrategy/).
+
+Pasta do Strategy de Formatação: [Acessar Pasta](src/br/edu/ifba/inf011/model/formatoStrategy/). </br>
 Pasta do Strategy de Envio: [Acessar Pasta](src/br/edu/ifba/inf011/model/envioStrategy/).
 #### **Por que usamos o Strategy (duas vezes)?**
 
