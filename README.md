@@ -45,7 +45,7 @@ Na versão original, o handler de baixa prioridade (`NotificadorBaixaPrioridade`
    Após a cadeia processar, o cliente verifica se algum handler executou a ação. Se não, lança `NenhumHandlerException`.
    
 **Classe:** `NenhumHandlerException`  
-**Link:** [Ver código](src/main/java/br/edu/ifba/inf011/exceptions/NenhumHandlerException.java)  
+**Link:** [Ver código](/src/br/edu/ifba/inf011/model/CoR/NenhumHandlerException.java)  
 #### **Exemplo:**
 ```java
 public void notificar(Evento evento) throws GoogleCalendarException, NenhumHandlerException {
